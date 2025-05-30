@@ -1,14 +1,21 @@
-// validate.java
+import java.util.regex.*;
+
 public class validate {
     public static void main(String[] args) {
-        try {
-            String input = args[0];
-            if (input.matches("[-+*/]?[0-9]+(\\s+[-+*/]\\s+[0-9]+)?([iI])?")) {
-                System.out.println("VALID");
-            } else {
-                System.out.println("INVALID");
-            }
-        } catch (Exception e) {
+        if (args.length != 1) {
+            System.out.println("INVALID");
+            return;
+        }
+
+        String input = args[0].trim();
+
+        // Pattern allows: number [operator] number (operator can be + - * / ^)
+        Pattern pattern = Pattern.compile("^\\s*\\d+\\s*([+\\-*/^])\\s*\\d+\\s*$");
+
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.matches()) {
+            System.out.println("VALID");
+        } else {
             System.out.println("INVALID");
         }
     }
